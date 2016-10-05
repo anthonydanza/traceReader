@@ -1,0 +1,22 @@
+--- 4TI LENS/FRAME TRACER DATA LOGGER ---
+
+This is a server that listens for and records data from
+the National Optronics 4Ti lens/frame tracer. 
+
+Right now it only understands the G-C format provided
+by the tracer device. G-C format does not include 3D trace
+data. OMA+Z does. OMA+Z format support ought to be
+added at some point to fix this and to facilitate more sophisticated
+automation of communication between a host (computer) and device 
+(tracer).
+
+The 0MA+Z protocol is defined in the Data Communication Standard
+document. The document included in this repo is version 3.10 of
+the Standard. The version that the 4Tx adheres to may be an earlier
+version. Keep this in mind if/when implementing OMA+Z support. 
+
+Data is recorded in JSON format.
+
+Please refer to the 4Tx manual for more info including how
+to configure the $Tx to communicate using different protocols
+and data formats.
