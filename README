@@ -18,5 +18,5 @@ version. Keep this in mind if/when implementing OMA+Z support.
 Data is recorded in JSON format.
 
 Please refer to the 4Tx manual for more info including how
-to configure the $Tx to communicate using different protocols
+to configure the 4Tx to communicate using different protocols
 and data formats.

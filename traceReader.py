@@ -19,7 +19,7 @@ class OMAPacket():
 		return
 
 #TODO
-def parse_oma(self, packet):
+def parse_oma(packet):
 	return
 
 class GCPacket():
@@ -49,6 +49,7 @@ def jdefault(o):
 
 def parse_gc(packet):
 	data = packet.split('\r\n')
+	print len(data)
 
 	if data[len(data)-1] != '\x04':
 		print "ERROR: G-C packet is malformed."
@@ -74,7 +75,7 @@ class traceServer():
 		self.save_dir = save_dir
 
 	def listen(self):
-		print "Listening for trace data on port " + self.serial.port + "\n"
+		print "Listening for trace data on port " + self.serial.port + " ...\n"
 		buff = []
 		while 1:
 			byte = ser.read(1)
@@ -90,15 +91,16 @@ class traceServer():
 
 	def parse_packet(self, packet):
 		if packet[0] == '\x1c':
-			data = parse_oma(packet)
+			print "OMA or OMA+Z packet detected. This format is not yet supported. Please configure the tracer to use G-C format instead."
+			#data = parse_oma(packet)
 		elif ''.join(packet[0:3]) == "JOB":
 			data = parse_gc(packet)
 			if data:
 				data.save(self.save_dir)
 		else:
 			print "ERROR: unknown packet type received: "
-			self.serial.resetInputBuffer()
-			self.serial.resetOutputBuffer()
+			self.serial.reset_input_buffer()
+			self.serial.reset_output_buffer()
 			return
 
 if __name__ == '__main__':
@@ -113,7 +115,7 @@ if __name__ == '__main__':
 		os.makedirs(args.save)
 
 	print "\nG-C trace data logger.\n"
-
+	
 	ser = serial.Serial(args.port, 9600, timeout=0.5)
 	server = traceServer(ser, args.save)
 	server.listen()
